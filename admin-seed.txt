@@ -1,0 +1,4 @@
+cd backend
+npx ts-node src/seed-admin.ts
+na dockerze:
+docker-compose exec backend npx ts-node src/seed-admin.ts

@@ -32,4 +32,23 @@ export class CreateTaskDto {
   @IsOptional()
   @IsString()
   projectId?: string;
+
+  @ApiProperty({
+    example: 'medium',
+    enum: ['low', 'medium', 'high'],
+    required: false,
+  })
+  @IsOptional()
+  @IsIn(['low', 'medium', 'high'])
+  priority?: string;
+
+  @ApiProperty({ example: 'userId123', required: false })
+  @IsOptional()
+  @IsString()
+  assignedTo?: string;
+
+  @ApiProperty({ example: 'teamId123', required: false })
+  @IsOptional()
+  @IsString()
+  teamId?: string;
 }

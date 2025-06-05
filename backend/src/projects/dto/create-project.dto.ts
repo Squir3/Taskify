@@ -10,4 +10,13 @@ export class CreateProjectDto {
   @IsOptional()
   @IsString()
   description?: string;
+
+  @ApiProperty({ example: ['userId1', 'userId2'], required: false })
+  @IsOptional()
+  members?: string[];
+
+  @ApiProperty({ example: 'teamId1', required: false })
+  @IsOptional()
+  @IsString()
+  teamId?: string;
 }

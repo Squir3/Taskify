@@ -13,6 +13,15 @@ export class ProjectService {
     return this.projectModel.find().exec();
   }
 
+  async findAllForUser(userId: string, teamId?: string): Promise<Project[]> {
+    if (teamId) {
+      // If teamId is provided, return projects for that team
+      return this.projectModel.find({ teamId }).exec();
+    }
+    // Otherwise, return projects where the user is a member
+    return this.projectModel.find({ members: userId }).exec();
+  }
+
   async findOne(id: string): Promise<Project> {
     const project = await this.projectModel.findById(id).exec();
     if (!project) {
@@ -23,5 +32,18 @@ export class ProjectService {
 
   async create(data: Partial<Project>): Promise<Project> {
     return this.projectModel.create(data);
+  }
+
+  async update(id: string, dto: Partial<Project>): Promise<Project> {
+    const project = await this.projectModel.findByIdAndUpdate(id, dto, {
+      new: true,
+    });
+    if (!project) throw new Error(`Project with id ${id} not found`);
+    return project;
+  }
+
+  async delete(id: string): Promise<void> {
+    const project = await this.projectModel.findByIdAndDelete(id);
+    if (!project) throw new Error(`Project with id ${id} not found`);
   }
 }
